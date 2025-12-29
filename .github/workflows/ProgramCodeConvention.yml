@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - "**/*.cs"
-  pull_request:
+  workflow_dispatch:
 
 jobs:
   ProgramCodeLinter:
@@ -15,9 +15,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Run Linter
-        uses: github/super-linter@v5
-        env:
-          VALIDATE_CSHARP: true
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.0.x'
+
+      - name: Install dotnet-format
+        run: dotnet tool install -g dotnet-format
+
+      - name: Run C# code style check
+        run: dotnet-format --verify-no-changes ProgramCode.cs
+
