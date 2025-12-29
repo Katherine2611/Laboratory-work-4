@@ -1,4 +1,4 @@
-name: Program Code Convention Check
+name: Program Code Linter
 
 on:
   push:
@@ -7,20 +7,17 @@ on:
   pull_request:
 
 jobs:
-  code-style-check:
+  ProgramCodeLinter:
+    name: ProgramCodeLinter
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '7.0.x'
-
-      - name: Install dotnet-format
-        run: dotnet tool install -g dotnet-format
-
-      - name: Run code style check
-        run: dotnet-format --verify-no-changes ProgramCode.cs
+      - name: Run Linter
+        uses: github/super-linter@v5
+        env:
+          VALIDATE_CSHARP: true
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
