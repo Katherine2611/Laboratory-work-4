@@ -1,0 +1,23 @@
+name: Data Schema Code Convention Check
+
+on:
+  push:
+    paths:
+      - "DataSchema*.sql"
+  workflow_dispatch:
+
+jobs:
+  sql-convention-check:
+    name: SQL Code Convention Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install sqlfluff
+        run: pip install sqlfluff
+
+      - name: Check SQL schema code conventions
+        run: |
+          sqlfluff lint DataSchema.sql --dialect postgres
