@@ -20,4 +20,5 @@ jobs:
 
       - name: Check SQL schema code conventions
         run: |
-          sqlfluff lint DataSchema.sql --dialect postgres
+          sqlfluff lint DataSchemaModified.sql --dialect postgres
+
