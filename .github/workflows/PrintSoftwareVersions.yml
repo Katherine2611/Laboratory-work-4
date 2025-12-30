@@ -33,10 +33,10 @@ jobs:
     name: AL – Database Versions
     runs-on: ubuntu-latest
     steps:
-      - name: Print SQL Server client version
+      - name: Print PostgreSQL client version
         run: |
-          echo "SQL Server tools version:"
-          sqlcmd -? || echo "sqlcmd not installed"
+          echo "PostgreSQL client version:"
+          psql --version || echo "psql not installed"
 
       - name: Print Docker version (for DB containers)
         run: |
